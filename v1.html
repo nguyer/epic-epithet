@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.min.js"></script>
+  <script type="text/javascript">
+
+      var adjectives = [
+        'most aggravated',
+        'most aggresive',
+        'least aggresive',
+        'most unlikely',
+        'most infamous',
+        'most notorious',
+        'most realistic',
+        'most pessimistic',
+        'most optimistic',
+        'most over-hyped',
+        'most underrated',
+        'smelliest',
+        'stealthiest',
+        'slipperiest',
+        'fastest',
+        'quickest',
+        'slowest',
+        'most matter of fact',
+        'smartest',
+        'greatest',
+        'most technically correct',
+        'most politically correct',
+        'most grammatically correct',
+        'most polite',
+        'most noble',
+        'most chivalrous',
+        'most pretentious',
+        'tallest',
+        'shortest',
+        'rudest',
+        'loudest',
+        'most punctual'
+    ];
+
+    var nouns = [
+      'hero',
+      'sidekick',
+      'villian',
+      'smuggler',
+      'pirate',
+      'scoundral',
+      'nerf herder',
+      'pilot',
+      'sharp-shooter',
+      'bomber',
+      'gunner',
+      'plumber',
+      'detective',
+      'thief',
+      'code breaker',
+      'programmer',
+      'executive',
+      'politician',
+    ];
+
+    var qualifiers = [
+      'in the world',
+      'in the galaxy',
+      'in the solar system',
+      'of all time',
+      'this side of the Mississippi',
+      'in the outer rim',
+      'in the Empire',
+      'from District 12',
+      'on planet Earth',
+      'in the Academy',
+      'in the North America',
+      'of our time',
+    ];
+
+    function generateEpithet() {
+      var name = document.getElementById('name').value;
+      var hash = CryptoJS.MD5(name).toString();
+      var adjectiveIndex = getIndexFromString(hash.substring(8,16));
+      var nounIndex = getIndexFromString(hash.substring(16,24));
+      var qualifierIndex = getIndexFromString(hash.substring(24,32));
+      var output = 'The ' + adjectives[adjectiveIndex % adjectives.length] + ' ';
+      output += nouns[nounIndex % nouns.length] + ' ';
+      output += qualifiers[qualifierIndex % qualifiers.length] + ' ';
+      document.getElementById('result').innerText = output;
+    }
+
+    function getIndexFromString(string) {
+      var index = 0;
+      for (var i = 0; i < string.length; i++) {
+        index += string.charCodeAt(i);
+      }
+      return index;
+    }
+  </script>
+</head>
+<body>
+    <input type="text" id="name"/><input type="button" onclick="generateEpithet()" value="generate"/>
+    <div id="result"></div>
+</body>
+</html>
